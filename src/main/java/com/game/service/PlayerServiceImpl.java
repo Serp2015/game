@@ -47,9 +47,10 @@ public class PlayerServiceImpl implements PlayerService {
 
         if (player.getBanned() == null) player.setBanned(false);
 
-        player.setLevel(getLevel(player));
-
-        player.setUntilNextLevel(getExp(player, getLevel(player)));
+        Integer level = (int) (Math.sqrt(2500 + (200 * player.getExperience())) - 50) / 100;
+        player.setLevel(level);
+        Integer untilNextLevel = 50 * (player.getLevel() + 1) * (player.getLevel() + 2) - player.getExperience();
+        player.setUntilNextLevel(untilNextLevel);
 
         return new ResponseEntity<>(playerRepository.save(player), HttpStatus.OK);
     }
@@ -115,21 +116,14 @@ public class PlayerServiceImpl implements PlayerService {
                     updatedPlayer.setBanned(player.getBanned());
                 } else updatedPlayer.setBanned(Boolean.FALSE);
 
-                updatedPlayer.setLevel(getLevel(player));
+                Integer level = (int) (Math.sqrt(2500 + (200 * updatedPlayer.getExperience())) - 50) / 100;
+                updatedPlayer.setLevel(level);
+                Integer untilNextLevel = 50 * (updatedPlayer.getLevel() + 1) * (updatedPlayer.getLevel() + 2) - updatedPlayer.getExperience();
+                updatedPlayer.setUntilNextLevel(untilNextLevel);
 
-                updatedPlayer.setUntilNextLevel(getExp(player, getLevel(player)));
             }
             return new ResponseEntity<>(playerRepository.save(updatedPlayer), HttpStatus.OK);
         }
-    }
-
-    private int getExp(Player player, int level) {
-        return 50 * (level + 1) * (level + 2) - player.getExperience();
-    }
-
-    private int getLevel(Player player) {
-        int level = (int) (Math.sqrt(2500 + (200 * player.getExperience())) - 50) / 100;
-        return level;
     }
 
     private boolean playerValidation(Player player) {

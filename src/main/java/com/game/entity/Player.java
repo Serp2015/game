@@ -11,6 +11,55 @@ public class Player {
 
     }
 
+    public Player(String name, String title, Race race, Profession profession, Integer experience, Date birthday) {
+        this.name = name;
+        this.title = title;
+        this.race = race;
+        this.profession = profession;
+        this.experience = experience;
+        this.birthday = birthday;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @Column
+    String name;
+    @Column
+    String title;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "race")
+    Race race;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "profession")
+    Profession profession;
+    @Column
+    Integer experience;
+    @Column
+    Integer level;
+    @Column
+    Integer untilNextLevel;
+    @Column
+    Date birthday;
+    @Column
+    Boolean banned;
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", race=" + race +
+                ", profession=" + profession +
+                ", experience=" + experience +
+                ", level=" + level +
+                ", untilNextLevel=" + untilNextLevel +
+                ", birthday=" + birthday +
+                ", banned=" + banned +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }
@@ -89,57 +138,5 @@ public class Player {
 
     public void setBanned(Boolean banned) {
         this.banned = banned;
-    }
-
-    /*public Player(String name, String title, Race race, Profession profession, Date birthday, Boolean banned, Integer experience, Integer level, Integer untilNextLevel) {
-        this.name = name;
-        this.title = title;
-        this.race = race;
-        this.profession = profession;
-        this.experience = experience;
-        this.level = level;
-        this.untilNextLevel = untilNextLevel;
-        this.birthday = birthday;
-        this.banned = banned;
-    }*/
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
-    private String name;
-    @Column
-    private String title;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "race")
-    private Race race;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "profession")
-    private Profession profession;
-    @Column
-    private Integer experience;
-    @Column
-    private Integer level;
-    @Column
-    private Integer untilNextLevel;
-    @Column
-    private Date birthday;
-    @Column
-    private Boolean banned;
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", title='" + title + '\'' +
-                ", race=" + race +
-                ", profession=" + profession +
-                ", experience=" + experience +
-                ", level=" + level +
-                ", untilNextLevel=" + untilNextLevel +
-                ", birthday=" + birthday +
-                ", banned=" + banned +
-                '}';
     }
 }
